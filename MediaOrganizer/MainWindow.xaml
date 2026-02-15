@@ -1,0 +1,77 @@
+<Window x:Class="MediaOrganizer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Media Organizer" Height="600" Width="900"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Source folder -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
+            <TextBlock Text="Source folder:" VerticalAlignment="Center" Width="100"/>
+            <TextBox x:Name="SourceTextBox" Width="600" Margin="5,0,5,0"/>
+            <Button Content="Browse..." Width="80" Click="BrowseSource_Click"/>
+        </StackPanel>
+
+        <!-- Target folder -->
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,0,0,10">
+            <TextBlock Text="Target folder:" VerticalAlignment="Center" Width="100"/>
+            <TextBox x:Name="TargetTextBox" Width="600" Margin="5,0,5,0"/>
+            <Button Content="Browse..." Width="80" Click="BrowseTarget_Click"/>
+        </StackPanel>
+
+        <!-- Action buttons -->
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,0,0,10">
+            <Button Content="Organize Photos & Videos"
+                    Width="200" Margin="0,0,10,0"
+                    Click="OrganizeButton_Click"/>
+            <Button Content="Scan for Duplicates"
+                    Width="160" Margin="0,0,10,0"
+                    Click="ScanDuplicatesButton_Click"/>
+            <CheckBox x:Name="CopyInsteadOfMoveCheckBox"
+                      Content="Copy instead of move" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Duplicates grid -->
+        <DataGrid x:Name="DuplicatesGrid"
+                  Grid.Row="3"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="False"
+                  CanUserAddRows="False"
+                  Margin="0,0,0,10">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Header="Delete?"
+                                        Binding="{Binding SelectedForDelete}"
+                                        Width="60"/>
+                <DataGridTextColumn Header="Group"
+                                    Binding="{Binding GroupId}"
+                                    Width="60"/>
+                <DataGridTextColumn Header="Size (KB)"
+                                    Binding="{Binding SizeKB}"
+                                    Width="80"/>
+                <DataGridTextColumn Header="Path"
+                                    Binding="{Binding Path}"
+                                    Width="*"/>
+                <DataGridTextColumn Header="Hash"
+                                    Binding="{Binding Hash}"
+                                    Width="250"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Duplicates control buttons -->
+        <StackPanel Orientation="Horizontal" Grid.Row="4">
+            <Button Content="Mark all except first in each group"
+                    Width="260" Margin="0,0,10,0"
+                    Click="MarkAllExceptFirst_Click"/>
+            <Button Content="Delete selected duplicates"
+                    Width="190"
+                    Click="DeleteSelectedButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
